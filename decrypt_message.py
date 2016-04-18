@@ -9,7 +9,7 @@ def decrypt(enc_key, crypto, signature):
     '''
     Decryption
     '''
-    with open('recv_private_key.pem') as privatefile:
+    with open('{receivers private key}') as privatefile:
         keydata = privatefile.read()
     privkey = rsa.PrivateKey.load_pkcs1(keydata, 'PEM')
     aes_key = rsa.decrypt(enc_key, privkey)
@@ -18,7 +18,7 @@ def decrypt(enc_key, crypto, signature):
     cipher = AES.new(aes_key, AES.MODE_CBC, iv)
     decoded = unpad(cipher.decrypt(aes_decode[16:]))
     print decoded
-    with open('sender_pubkey.pem') as publicfile:
+    with open('{senders public key}') as publicfile:
         pkeydata = publicfile.read()
     pubkey = rsa.PublicKey.load_pkcs1(pkeydata)
     try:
