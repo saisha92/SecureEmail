@@ -11,8 +11,8 @@ import datetime
 
 BS = 16
 pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS) 
-fromaddr = "fromaddr"
-toaddr = "toaddr"
+fromaddr = "{sender email}"
+toaddr = "{receivers email}"
 msg = MIMEMultipart()
 msg['From'] = fromaddr
 msg['To'] = toaddr
@@ -47,10 +47,10 @@ def get_keys():
     '''
     Get the receivers public key and the senders private key
     '''
-    with open('recv_pubkey.pem') as publicfile:
+    with open('{receivers public key}') as publicfile:
         pkeydata = publicfile.read()
     recv_pubkey = rsa.PublicKey.load_pkcs1(pkeydata)
-    with open('sender_private_key.pem') as privatefile:
+    with open('{senders private key}') as privatefile:
         keydata = privatefile.read()
     senderprivkey = rsa.PrivateKey.load_pkcs1(keydata, 'PEM')
     return (recv_pubkey, senderprivkey)
